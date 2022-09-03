@@ -1,4 +1,71 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+#topcontainer{
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) minmax(330px, 4fr) minmax(275px, 1.2fr);
+    grid-template-rows: 200px 1fr 1fr;
+    min-height: 100vh;
+}
 #header{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.2fr / 0.8fr;
+    align-items: stretch;
+    text-align: center;
     background-color: darkgray;
-    min-height: 50px;
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+    box-sizing: border-box;
+}
+
+#searchbar{
+    background-color: yellow;
+    min-height: 125px;
+}
+
+#hButtons{
+    min-height: 75px;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 75px;
+    box-sizing: border-box;
+}
+
+
+
+button{
+	color: lightgrey;
+	background-color: rgb(10, 10, 10);
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 1.25rem;
+    box-shadow: none;
+}
+
+button:hover{
+
+	color: white;
+	border-color: white;
+	text-shadow: 0px 0px 3px rgb(220,220,220);
+	box-shadow: none;
+
+}
+
+#searchbar{
+    grid-column: 1 / 3;
+    grid-row: 0 / 1;
+}
+
+#sidebar{
+    background-color: blue;
+    grid-column: 1 / 2;
+    grid-row: 2 / 4;
 }
