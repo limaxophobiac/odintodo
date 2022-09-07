@@ -1,6 +1,10 @@
-export default function todoFactory(doName){
+export default function todoFactory(doName, doProject, doDate, doDescrip, completed = false, doPriority = 0){
     function logname(){
-        console.log('implement this thing ' + doName);
+        console.log('implement this thing ' + this.doName);
     }
-    return {doName, logname};
+    function setPriority(newPriority){
+        this.doPriority = newPriority;
+    }
+    let id = 2434;
+    return {doName, doProject, doDate, doPriority, doDescrip, setPriority, id, logname, completed};
 };

@@ -5,22 +5,38 @@
     box-sizing: border-box;
 }
 
+button {
+	background: none;
+	color: black;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+#searchButton, #addToDo, #projetadder{
+    color:white
+}
+
 #topcontainer{
     display: grid;
-    grid-template-columns: 250px minmax(330px, 4fr) minmax(275px, 1.2fr) 250px;
+    grid-template-columns: 250px minmax(330px, 4fr) minmax(275px, 1.2fr);
     grid-template-rows: 175px 1fr 1fr;
     min-height: 100vh;
 }
 #header{
     display: grid;
-    grid-template-columns: 250px minmax(330px, 4fr) minmax(275px, 1.2fr) 250px;
+    grid-template-columns: 250px minmax(330px, 4fr) minmax(275px, 1.2fr);
     grid-template-rows: 125px 50px;
     align-items: stretch;
     text-align: center;
-    background-color: black;
+    background-color: rgb(80, 80, 88);
     grid-column: 1 / 5;
     grid-row: 1 / 2;
     box-sizing: border-box;
+    z-index: 2;
+    box-shadow: 3px 3px 3px rgb(150, 150, 160);
 }
 
 #logoContainer{
@@ -44,16 +60,19 @@
     align-items: center;
     gap: 20px;
     box-sizing: border-box;
-    padding-left: 20%;
+    padding-left: 13%;
+    padding-right: 15% -100px;
 }
+
+
 
 #searchbar{
     width: 75%;
-    background-color: rgb(210, 210, 210);
+    background-color: rgb(210, 210, 220);
     min-height: 1.8rem;
     font-size: 1rem;
     border: none;
-    border-radius: 12px;;
+    border-radius: 6px;;
     padding: 2px 10px 2px 10px;
     box-sizing: border-box;
 }
@@ -66,19 +85,55 @@
 }
 
 #taskcontainer{
-    background-color: lightgray;
-    grid-column: 2 / 5;
+    padding-top: 5px;
+    background-color: rgb(210, 210, 220);
+    grid-column: 2 / 4;
     grid-row: 2 / 4;
+}
+
+.doBox{
+    background-color: rgb(170, 170, 180);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    padding: 10px 20px 10px 20px;
+    border-left: 7px solid black;
+    border-radius: 2px;
+    margin: 5px 15px 10px 10px;
+    box-shadow: 1px 1px 2px rgb(150, 150, 150);
+    transition: box-shadow 0.5s;
+    transition: background-color 0.2s;
+
+}
+
+.doBox:hover{
+    box-shadow: 3px 3px 3px rgb(150, 150, 150);
+    background-color: rgb(200, 200, 210);
+}
+
+
+.priority2{
+    border-color: rgb(70, 70, 75);
+}
+
+.priority1{
+    border-color: rgb(250, 250, 255);
+}
+
+.doBox .toDoName {
+    margin-right: auto;
 }
 
 #leftSidebar{
-    background-color: rgb(82, 82, 82);
+    color: white;
+    background-color: black;
     grid-column: 1 / 2;
     grid-row: 2 / 4;
-}
-
-#rightSidebar{
-    background-color: rgb(82, 82, 82);
-    grid-column: 4 / 5;
-    grid-row: 2 / 4;
+    box-sizing: border-box;
+    padding: 25px;
+    text-align: center;
+    z-index: 2;
+    box-shadow: 3px 3px 3px rgb(150, 150, 160);
 }
