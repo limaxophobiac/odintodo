@@ -15,7 +15,7 @@ button {
 	outline: inherit;
 }
 
-#searchButton, #addToDo, #projetadder{
+#searchButton, #addToDo, #projectadder{
     color:white
 }
 
@@ -115,7 +115,7 @@ button {
 
 
 .priority2{
-    border-color: rgb(70, 70, 75);
+    border-color: rgb(80, 80, 88);
 }
 
 .priority1{

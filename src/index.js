@@ -83,3 +83,38 @@ let o = todoFactory("testing3", "k", "6/5/2055", "do stuff", false, 2);
 displayDo(m);
 displayDo(s);
 displayDo(o);
+
+function blockEverything(){
+    let k = document.createElement('div');
+    k.setAttribute("id", "blocker");
+    k.style.width = "100vw";
+    k.style.height = "100vh";
+    k.style.position = "fixed";
+    k.style.top = "0";
+    k.style.left = "0";
+    k.style.zIndex = "5";
+    document.body.appendChild(k);
+    k.style.transition = "backdrop-filter 0.2s"
+    k.style.transition = "background-color 0.2s"
+    setTimeout(function(){ k.style.backgroundColor = "rgba(0, 0, 0, 0.4)"; k.style.backdropFilter = "blur(2px)";}, 0);
+}
+
+function unBlockEverything(){
+    let k = document.getElementById("blocker");
+    k.style.transition = "backdrop-filter 0.2s"
+    k.style.transition = "background-color 0.2s"
+    setTimeout(function(){ k.style.backgroundColor = "rgba(0, 0, 0, 0.0)"; k.style.backdropFilter = "blur(0px)";}, 0);
+    setTimeout(function(){k.remove();}, 200);
+}
+
+let addToDoButton = document.getElementById("addToDo");
+addToDoButton.addEventListener('click', () => {
+    blockEverything();
+    setTimeout(unBlockEverything, 1000);
+});
+
+let addProjectButton = document.getElementById("projectadder");
+addProjectButton.addEventListener('click', () =>{
+    blockEverything();
+    setTimeout(unBlockEverything, 1000);
+});
