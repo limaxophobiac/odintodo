@@ -23,7 +23,7 @@ export default function makePopUp(title, blockIndex = 100){
     let popUpHeader = makeBoxHeader(title);
     let popUpcontent = document.createElement('div');
     popUpcontent.style.height = "90%";
-    popUpcontent.style.padding = "8px 12px 5px 12px";
+    popUpcontent.style.padding = "8px 15px 5px 15px";
     popBox.appendChild(popUpHeader);
     popBox.appendChild(popUpcontent);
     return {popBox, popUpHeader, popUpcontent};
