@@ -1,6 +1,8 @@
 import todoFactory from './todo';
-import './style.css';
+import makePopUp from './popup';
+import {closePupUp} from './popup';
 import {blockScreen, unBlockScreen} from './screenblock.js';
+import './style.css';
 
 const doContainer = document.getElementById("taskcontainer");
 let toDoList = [];
@@ -74,7 +76,6 @@ function displayToDo(toDo){
     doBox.appendChild(detailsButton);
     doBox.appendChild(editButton);
     doBox.appendChild(deleteButton);
-
     doContainer.appendChild(doBox);
 }
 
@@ -97,28 +98,39 @@ displayToDo(o);
 
 let addToDoButton = document.getElementById("addToDo");
 addToDoButton.addEventListener('click', () => {
-    let newToDoBox = makePopUp();
-    let boxHeader = makeBoxHeader("New ToDo...");
+    let newToDoBox = makePopUp("New ToDo...");
+    let formBox = newToDoBox.popUpcontent;
+    formBox.innerHTML =
+    `<label for="newTitle">Title:<input type="text" name="Title" id="newTitle" title="*Book Title"></label><br>
+    <label for="projectSelect">Project <select name="projectSelect" id="projectSelect" title="*Project">
+          <option value = "k">sdaf</option>
+          <option value = "r">sdfsdfds</option>
+    </select></label><br>
+    <label for="newDescroption">Description</label><br> <textarea style="resize:none; width: 80%; height: 60%" name="Description" id="newDescription"></textarea><br>
+    <button id="createToDo">Add ToDo</button>`;
 
-    newToDoBox.appendChild(boxHeader);
-
-    document.body.appendChild(newToDoBox);
+    document.body.appendChild(newToDoBox.popBox);
+    let k1  =  document.getElementById("createToDo");
+    let newTitle = document.getElementById("newTitle");
+    let newDescription = document.getElementById("newDescription");
+    k1.addEventListener('click', ()=> {
+        let m1 = todoFactory(newTitle.value, pro, "5/5/5/6", newDescription.value, false, 2);
+        toDoList.push(m1);
+        displayToDo(m1);
+        closePupUp();
+    });
 });
 
 let addProjectButton = document.getElementById("projectadder");
 addProjectButton.addEventListener('click', () =>{
-    let newProjectBox = makePopUp();
-    let boxHeader = makeBoxHeader("New Project...");
-    newProjectBox.appendChild(boxHeader);
+    let newProjectBox = makePopUp("New Project...");
 
-    document.body.appendChild(newProjectBox);
+    document.body.appendChild(newProjectBox.popBox);
 });
 
 function showToDoDetails(toDo){
-    let detailsBox = makePopUp();
-    let detailsHeader = makeBoxHeader(toDo.doName);
-    let infoBox = document.createElement('div');
-    infoBox.style.height= "90%";
+    let detailsBox = makePopUp(toDo.doName);
+    let infoBox = detailsBox.popUpcontent;
     infoBox.style.fontSize = "1.2rem";
     infoBox.style.lineHeight = "1.2rem";
     infoBox.innerHTML = `<p>Project: ${toDo.doProject.projectName}</p>
@@ -126,63 +138,6 @@ function showToDoDetails(toDo){
     <p>Due Date: ${toDo.doDate}</p>
     <br>
     <p>Description: ${toDo.doDescrip}</p>`;
-    infoBox.style.padding = "8px 12px 5px 12px"
 
-    detailsBox.appendChild(detailsHeader);
-    detailsBox.appendChild(infoBox);
-    document.body.appendChild(detailsBox);
-}
-
-function closePupUp(){
-    let popUpBox = document.getElementById("popUpBox");
-    popUpBox.remove();
-    unBlockScreen();
-}
-
-function makePopUp(){
-    blockScreen(3);
-    let popBox = document.createElement('div');
-    popBox.setAttribute("id", "popUpBox");
-    popBox.style.minWidth = "600px";
-    popBox.style.minHeight = "400px";
-    popBox.style.display = "flex";
-    popBox.style.flexDirection = "column";
-    popBox.style.width = "50%";
-    popBox.style.height = "60%";
-    popBox.style.zIndex = "4";
-    popBox.style.backgroundColor = "lightgray";
-    popBox.style.top = "50%";
-    popBox.style.left = "50%";
-    popBox.style.marginTop = "min(-200px, -30vh)";
-    popBox.style.marginLeft = "min(-300px, -25vw)";
-    popBox.style.position = "fixed";
-    popBox.style.borderRadius = "6px";
-    popBox.style.boxShadow = "5px 5px 5px rgba(0, 0, 0, 0.2), 5px -1px 5px rgba(0, 0, 0, 0.2)";
-    return popBox;
-}
-
-function makeBoxHeader(headTitle){
-    let boxHeader = document.createElement('div');
-
-    boxHeader.style.backgroundColor = "gray";
-    boxHeader.style.height = "10%";
-    boxHeader.style.display = "flex";
-    boxHeader.style.justifyContent = "space-between";
-    boxHeader.style.padding = "0px 12px 0px 12px";
-    boxHeader.style.borderRadius = "6px 6px 0px 0px";
-    boxHeader.style.fontWeight = "bold";
-    boxHeader.style.lineHeight = "max(6vh, 40px)";
-    boxHeader.style.fontSize = "max(4vh, 30px)";
-
-    let headerText = document.createElement('div');
-    headerText.textContent = headTitle;
-    headerText.marginRight = "auto";
-
-    let closeButton = document.createElement('button');
-    closeButton.textContent = "X";
-    closeButton.addEventListener('click', () => closePupUp());
- 
-    boxHeader.appendChild(headerText);
-    boxHeader.appendChild(closeButton);
-    return boxHeader;
+    document.body.appendChild(detailsBox.popBox);
 }
