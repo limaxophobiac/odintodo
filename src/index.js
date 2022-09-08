@@ -1,7 +1,5 @@
 import todoFactory from './todo';
-import makePopUp from './popup';
-import {closePupUp} from './popup';
-import {blockScreen, unBlockScreen} from './screenblock.js';
+import {makePopUp, closePupUp} from './popup';
 import './style.css';
 
 const doContainer = document.getElementById("taskcontainer");
@@ -14,7 +12,13 @@ function addToDo(toDo){
 }
 
 function deleteToDo(doId){
-
+    let index;
+    for (index = 0; index < toDoList.length; index++){
+        if (toDoList[index].id == doId){
+            toDoList.splice(index, 1);
+            break;
+        }
+    }
 }
 
 function refreshToDos(){
@@ -138,6 +142,7 @@ addToDoButton.addEventListener('click', () => {
     }
     let dateSelect = document.createElement("input");
     dateSelect.type = "date";
+    dateSelect.valueAsDate = new Date();
     let prioritySelect = document.createElement("select");
     let lowP = document.createElement("option");
     lowP.value = "1";

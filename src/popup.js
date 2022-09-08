@@ -1,6 +1,6 @@
 import {blockScreen, unBlockScreen} from './screenblock.js';
 
-export default function makePopUp(title, blockIndex = 100){
+export function makePopUp(title, blockIndex = 100){
     blockScreen(blockIndex);
     let popBox = document.createElement('div');
     popBox.setAttribute("id", "popUpBox");
