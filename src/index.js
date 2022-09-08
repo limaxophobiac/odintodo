@@ -35,8 +35,13 @@ function displayToDo(toDo){
     doBox.id = "toDo" + toDo.doName;
     doBox.classList.add("doBox");
     doBox.classList.add("priority" + toDo.doPriority);
-    doBox.innerHTML = `<div class="toDoName">${toDo.doName}</div>
-    <div class="toDoDate">${toDo.doDate}</div>`;
+    let doNameDiv = document.createElement('div');
+    doNameDiv.textContent = toDo.doName;
+    doNameDiv.classList.add("toDoName");
+    let doDateDiv = document.createElement('div');
+    doDateDiv.textContent = toDo.doDate;
+    if (toDo.completed) doNameDiv.style.textDecoration = "line-through";
+    else doNameDiv.style.textDecoration = "none";
     
     //delete todo
     let deleteButton = document.createElement('button');
@@ -62,12 +67,21 @@ function displayToDo(toDo){
     //complete todo
     let completeButton = document.createElement(`button`);
     completeButton.classList.add("toDoComplete");
-    completeButton.textContent = "Complete";
+    completeButton.textContent = toDo.completed ? "Undo" : "Complete";
     completeButton.addEventListener('click', () => {
         toDo.completed = !toDo.completed;
-        //display update?
+        if (toDo.completed){
+            doNameDiv.style.textDecoration = "line-through";
+            completeButton.textContent = "Undo";
+        }
+        else{
+            doNameDiv.style.textDecoration = "none";
+            completeButton.textContent = "Complete";
+        }
     });
 
+    doBox.appendChild(doNameDiv);
+    doBox.appendChild(doDateDiv);
     doBox.appendChild(completeButton);
     doBox.appendChild(detailsButton);
     doBox.appendChild(editButton);
@@ -124,12 +138,25 @@ addToDoButton.addEventListener('click', () => {
     }
     let dateSelect = document.createElement("input");
     dateSelect.type = "date";
-    let prioritySelect = document.createElement("input");
-    prioritySelect.type = "select";
+    let prioritySelect = document.createElement("select");
+    let lowP = document.createElement("option");
+    lowP.value = "1";
+    lowP.textContent = "Low";
+    let medP = document.createElement("option");
+    medP.value = "2";
+    medP.textContent = "Medium";
+    let highP = document.createElement("option");
+    highP.value = "3";
+    highP.textContent = "High";
     
+    prioritySelect.appendChild(lowP);
+    prioritySelect.appendChild(medP);
+    prioritySelect.appendChild(highP);
+
     formBox.appendChild(newTitle);
     formBox.appendChild(projectSelect);
     formBox.appendChild(dateSelect);
+    formBox.appendChild(prioritySelect);
     formBox.appendChild(newDescription);
     formBox.appendChild(addToDoButton);
 
