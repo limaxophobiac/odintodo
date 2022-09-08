@@ -6,6 +6,7 @@ import './style.css';
 
 const doContainer = document.getElementById("taskcontainer");
 let toDoList = [];
+let projectList = [];
 
 function addToDo(toDo){
     toDoList.push(toDo);   
@@ -35,7 +36,7 @@ function displayToDo(toDo){
     doBox.classList.add("doBox");
     doBox.classList.add("priority" + toDo.doPriority);
     doBox.innerHTML = `<div class="toDoName">${toDo.doName}</div>
-    <div class="toDoDate">Date: ${toDo.doDate}</div>`;
+    <div class="toDoDate">${toDo.doDate}</div>`;
     
     //delete todo
     let deleteButton = document.createElement('button');
@@ -79,13 +80,18 @@ function displayToDo(toDo){
 
 
 
-let pro = projectFactory("Programming", "trying to learn to program");
+let pro1 = projectFactory("Programming", "trying to learn to program");
+let pro2 = projectFactory("Web Design", "cant really call this programming");
+let pro3 = projectFactory("Algorithms", "ordo notation and stuff");
+projectList.push(pro1);
+projectList.push(pro2);
+projectList.push(pro3);
 
-let m = todoFactory("testing1", pro, "5/5/2055", "do stuff", false, 3);
+let m = todoFactory("testing1", pro1, "5/5/2055", "do stuff", false, 3);
 m.id = 543543;
-let s = todoFactory("testing2", pro, "6/5/2055", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
+let s = todoFactory("testing2", pro1, "6/5/2055", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
 
-let o = todoFactory("testing3", pro, "6/5/2055", "do stuff", false, 2);
+let o = todoFactory("testing3", pro1, "6/5/2055", "do stuff", false, 2);
 
 addToDo(m);
 addToDo(s);
@@ -108,10 +114,18 @@ addToDoButton.addEventListener('click', () => {
     let addToDoButton = document.createElement("button");
     addToDoButton.innerHTML = "Add ToDo";
 
-    let projectSelect = document.createElement("input");
-    projectSelect.type = "select";
+    let projectSelect = document.createElement("select");
+
+    for (let i = 0; i < projectList.length; i++){
+        let pOption = document.createElement("option");
+        pOption.value = ""+i;
+        pOption.textContent = projectList[i].projectName;
+        projectSelect.appendChild(pOption);
+    }
     let dateSelect = document.createElement("input");
     dateSelect.type = "date";
+    let prioritySelect = document.createElement("input");
+    prioritySelect.type = "select";
     
     formBox.appendChild(newTitle);
     formBox.appendChild(projectSelect);
@@ -120,9 +134,9 @@ addToDoButton.addEventListener('click', () => {
     formBox.appendChild(addToDoButton);
 
     document.body.appendChild(newToDoBox.popBox);
-    
+
     addToDoButton.addEventListener('click', ()=> {
-        let m1 = todoFactory(newTitle.value, pro, "5/5/5/6", newDescription.value, false, 2);
+        let m1 = todoFactory(newTitle.value, projectList[projectSelect.value], dateSelect.value, newDescription.value, false, prioritySelect.value);
         addToDo(m1);
         closePupUp();
     });
