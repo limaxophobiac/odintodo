@@ -15,8 +15,9 @@ k.logname();
 k.setPriority(10);
 console.log(k.doPriority);
 
-function addToDo(){
-
+function addToDo(toDo){
+    toDoList.push(toDo);   
+    refreshToDos();
 }
 
 function deleteToDo(doId){
@@ -24,7 +25,9 @@ function deleteToDo(doId){
 }
 
 function refreshToDos(){
-    
+    document.querySelectorAll(".doBox").forEach(elem => elem.remove());
+    //sort toDos
+    toDoList.forEach(toDo => displayToDo(toDo));
 }
 
 function projectFactory (projectName, projectDescription){
@@ -100,13 +103,17 @@ let addToDoButton = document.getElementById("addToDo");
 addToDoButton.addEventListener('click', () => {
     let newToDoBox = makePopUp("New ToDo...");
     let formBox = newToDoBox.popUpcontent;
+    formBox.style.paddingLeft = "5%";
+    formBox.style.paddingRight = "5%";
+    formBox.style.fontSize = "1.3rem";
+    formBox.style.gap = "10px";
     formBox.innerHTML =
-    `<label for="newTitle">Title:<input type="text" name="Title" id="newTitle" title="*Book Title"></label><br>
+    `<label for="newTitle">Title <input type="text" name="Title" id="newTitle" title="*Book Title"></label>
     <label for="projectSelect">Project <select name="projectSelect" id="projectSelect" title="*Project">
           <option value = "k">sdaf</option>
           <option value = "r">sdfsdfds</option>
     </select></label><br>
-    <label for="newDescroption">Description</label><br> <textarea style="resize:none; width: 80%; height: 60%" name="Description" id="newDescription"></textarea><br>
+    <label for="newDescroption">Description</label><br> <textarea style="resize:none; width: 100%; height: 70%" name="Description" id="newDescription"></textarea><br>
     <button id="createToDo">Add ToDo</button>`;
 
     document.body.appendChild(newToDoBox.popBox);
@@ -115,8 +122,7 @@ addToDoButton.addEventListener('click', () => {
     let newDescription = document.getElementById("newDescription");
     k1.addEventListener('click', ()=> {
         let m1 = todoFactory(newTitle.value, pro, "5/5/5/6", newDescription.value, false, 2);
-        toDoList.push(m1);
-        displayToDo(m1);
+        addToDo(m1);
         closePupUp();
     });
 });
