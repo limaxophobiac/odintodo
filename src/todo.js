@@ -1,4 +1,4 @@
-export default function todoFactory(doName, doProject, doDate, doDescrip, completed = false, doPriority = 0){
+export default function todoFactory(doName, doProject = null, doDate, doDescrip, completed = false, doPriority = 0){
     function logname(){
         console.log('implement this thing ' + this.doName);
     }
