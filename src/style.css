@@ -138,3 +138,7 @@ button {
     z-index: 2;
     box-shadow: 3px 3px 3px rgb(150, 150, 160);
 }
+
+#leftSidebar .button{
+    color: white;
+}

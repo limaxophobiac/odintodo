@@ -3,6 +3,7 @@ import {makePopUp, closePupUp} from './popup';
 import './style.css';
 
 const doContainer = document.getElementById("taskcontainer");
+const projectContainer = document.getElementById("projectList");
 let toDoList = [];
 let projectList = [];
 
@@ -21,17 +22,34 @@ function deleteToDo(doId){
     }
 }
 
+function deleteProject(project){
+    let index;
+    for (index = 0; index < projectList.length; index++){
+        if (projectList[index] == project){
+            projectList.splice(index, 1);
+            break;
+        }
+    }
+}
+
 function refreshToDos(){
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
     //sort toDos
     toDoList.forEach(toDo => displayToDo(toDo));
 }
 
+function refreshProjects(){
+    document.querySelectorAll(".projectBox").forEach(elem => elem.remove());
+    projectList.forEach(project => displayProject(project));
+}
+
 function projectFactory (projectName, projectDescription){
+    return {projectName, projectDescription};
+}
 
-    let id = 2434;
-
-    return {projectName, projectDescription, id};
+function addProject(project){
+    projectList.push(project);   
+    refreshProjects();
 }
 
 function displayToDo(toDo){
@@ -93,29 +111,6 @@ function displayToDo(toDo){
     doContainer.appendChild(doBox);
 }
 
-
-
-
-
-
-let pro1 = projectFactory("Programming", "trying to learn to program");
-let pro2 = projectFactory("Web Design", "cant really call this programming");
-let pro3 = projectFactory("Algorithms", "ordo notation and stuff");
-projectList.push(pro1);
-projectList.push(pro2);
-projectList.push(pro3);
-
-let m = todoFactory("testing1", pro1, "5/5/2055", "do stuff", false, 3);
-m.id = 543543;
-let s = todoFactory("testing2", pro1, "6/5/2055", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
-
-let o = todoFactory("testing3", pro1, "6/5/2055", "do stuff", false, 2);
-
-addToDo(m);
-addToDo(s);
-addToDo(o);
-
-
 let addToDoButton = document.getElementById("addToDo");
 addToDoButton.addEventListener('click', () => {
     let newToDoBox = makePopUp("New ToDo...");
@@ -174,11 +169,64 @@ addToDoButton.addEventListener('click', () => {
     });
 });
 
+function displayProject(project){
+    const projectBox = document.createElement('div');
+    projectBox.id = "project" + project.projectName;
+    projectBox.classList.add("projectBox");
+    let projectNameDiv = document.createElement('div');
+    projectNameDiv.textContent = project.projectName;
+    projectNameDiv.classList.add("projectName");
+
+    let deleteButton = document.createElement('button');
+    deleteButton.classList.add("projectDelete");
+    deleteButton.style.color = "white";
+    deleteButton.textContent = "X";
+    deleteButton.addEventListener('click', () => {
+        deleteProject(project);
+        refreshProjects();
+    });
+    
+    let descriptionButton = document.createElement(`button`);
+    descriptionButton.style.color = "white";
+    descriptionButton.classList.add("projectDescription");
+    descriptionButton.textContent = "?";
+    descriptionButton.addEventListener('click', () => console.log(project.projectDescription));
+
+    projectBox.appendChild(projectNameDiv);
+    projectBox.appendChild(deleteButton);
+    projectBox.appendChild(descriptionButton);
+    projectContainer.appendChild(projectBox);
+}
+
+
 let addProjectButton = document.getElementById("projectadder");
 addProjectButton.addEventListener('click', () =>{
     let newProjectBox = makePopUp("New Project...");
+    let formBox = newProjectBox.popUpcontent;
 
+    formBox.style.fontSize = "1.3rem";
+    formBox.style.gap = "10px";
+
+    let newTitle = document.createElement("input");
+    newTitle.type = "text";
+    let newDescription = document.createElement("textarea");
+    newDescription.style.resize = "none";
+    newDescription.style.width = "100%";
+    newDescription.style.height = "70%";
+    let addProjectButton = document.createElement("button");
+    addProjectButton.innerHTML = "Add Project";
+
+    formBox.appendChild(newTitle);
+    formBox.appendChild(newDescription);
+    formBox.appendChild(addProjectButton);
     document.body.appendChild(newProjectBox.popBox);
+    
+
+    addProjectButton.addEventListener('click', ()=> {
+        let m1 = projectFactory(newTitle.value, newDescription.value);
+        addProject(m1);
+        closePupUp();
+    });
 });
 
 function showToDoDetails(toDo){
@@ -194,3 +242,22 @@ function showToDoDetails(toDo){
 
     document.body.appendChild(detailsBox.popBox);
 }
+
+
+
+let pro1 = projectFactory("Programming", "trying to learn to program");
+let pro2 = projectFactory("Web Design", "cant really call this programming");
+let pro3 = projectFactory("Algorithms", "ordo notation and stuff");
+addProject(pro1);
+addProject(pro2);
+addProject(pro3);
+
+let m = todoFactory("testing1", pro1, "8/9/2434", "do stuff", false, 3);
+
+let s = todoFactory("testing2", pro1, "8/9/2434", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
+
+let o = todoFactory("testing3", pro1, "8/9/2434", "do stuff", false, 2);
+
+addToDo(m);
+addToDo(s);
+addToDo(o);
