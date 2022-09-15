@@ -144,7 +144,7 @@ function displayProject(project){
 
     let deleteButton = document.createElement('button');
     deleteButton.classList.add("projectDelete");
-    deleteButton.style.color = "white";
+    
     deleteButton.textContent = "X";
     deleteButton.addEventListener('click', () => {
         deleteProject(project.id);
@@ -152,14 +152,14 @@ function displayProject(project){
     });
     
     let descriptionButton = document.createElement(`button`);
-    descriptionButton.style.color = "white";
+    
     descriptionButton.classList.add("projectDescription");
     descriptionButton.textContent = "?";
     descriptionButton.addEventListener('click', () => console.log(project.projectDescription));
 
     projectBox.appendChild(projectNameDiv);
-    projectBox.appendChild(deleteButton);
     projectBox.appendChild(descriptionButton);
+    projectBox.appendChild(deleteButton);
     projectContainer.appendChild(projectBox);
 }
 

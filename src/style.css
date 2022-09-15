@@ -139,6 +139,21 @@ button {
     box-shadow: 3px 3px 3px rgb(150, 150, 160);
 }
 
-#leftSidebar .button{
+#leftSidebar button{
     color: white;
+}
+
+#projectList{
+    margin: 10px 15px;
+}
+
+.projectBox{
+    display: flex;
+    color: white;
+    justify-content: start;
+    gap: 10px;
+}
+
+.projectName{
+    margin-right: auto;
 }
