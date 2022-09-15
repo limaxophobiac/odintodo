@@ -1,55 +1,19 @@
-import todoFactory from './todo';
+import {todoFactory, projectFactory, toDoList, projectList, deleteToDo, deleteProject, addToDo, addProject} from './todo';
 import {makePopUp, closePupUp} from './popup';
+
 import './style.css';
 
 const doContainer = document.getElementById("taskcontainer");
 const projectContainer = document.getElementById("projectList");
-let toDoList = [];
-let projectList = [];
-
-function addToDo(toDo){
-    toDoList.push(toDo);   
-    refreshToDos();
-}
-
-function deleteToDo(doId){
-    let index;
-    for (index = 0; index < toDoList.length; index++){
-        if (toDoList[index].id == doId){
-            toDoList.splice(index, 1);
-            break;
-        }
-    }
-}
-
-function deleteProject(project){
-    let index;
-    for (index = 0; index < projectList.length; index++){
-        if (projectList[index] == project){
-            projectList.splice(index, 1);
-            break;
-        }
-    }
-}
 
 function refreshToDos(){
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
-    //sort toDos
     toDoList.forEach(toDo => displayToDo(toDo));
 }
 
 function refreshProjects(){
     document.querySelectorAll(".projectBox").forEach(elem => elem.remove());
     projectList.forEach(project => displayProject(project));
-}
-
-function projectFactory (projectName, projectDescription){
-    return {projectName, projectDescription};
-}
-
-function addProject(project){
-    projectList.push(project);   
-    refreshProjects();
 }
 
 function displayToDo(toDo){
@@ -165,6 +129,7 @@ addToDoButton.addEventListener('click', () => {
     addToDoButton.addEventListener('click', ()=> {
         let m1 = todoFactory(newTitle.value, projectList[projectSelect.value], dateSelect.value, newDescription.value, false, prioritySelect.value);
         addToDo(m1);
+        refreshToDos();
         closePupUp();
     });
 });
@@ -182,7 +147,7 @@ function displayProject(project){
     deleteButton.style.color = "white";
     deleteButton.textContent = "X";
     deleteButton.addEventListener('click', () => {
-        deleteProject(project);
+        deleteProject(project.id);
         refreshProjects();
     });
     
@@ -225,6 +190,7 @@ addProjectButton.addEventListener('click', () =>{
     addProjectButton.addEventListener('click', ()=> {
         let m1 = projectFactory(newTitle.value, newDescription.value);
         addProject(m1);
+        refreshProjects();
         closePupUp();
     });
 });
@@ -245,19 +211,25 @@ function showToDoDetails(toDo){
 
 
 
-let pro1 = projectFactory("Programming", "trying to learn to program");
-let pro2 = projectFactory("Web Design", "cant really call this programming");
-let pro3 = projectFactory("Algorithms", "ordo notation and stuff");
-addProject(pro1);
-addProject(pro2);
-addProject(pro3);
+populate();
 
-let m = todoFactory("testing1", pro1, "8/9/2434", "do stuff", false, 3);
+function populate(){
+    let pro1 = projectFactory("Programming", "trying to learn to program");
+    let pro2 = projectFactory("Web Design", "cant really call this programming");
+    let pro3 = projectFactory("Algorithms", "ordo notation and stuff");
+    addProject(pro1);
+    addProject(pro2);
+    addProject(pro3);
+    refreshProjects();
 
-let s = todoFactory("testing2", pro2, "8/9/2434", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
+    let m = todoFactory("testing1", pro1, "8/9/2434", "do stuff", false, 3);
 
-let o = todoFactory("testing3", pro3, "8/9/2434", "do stuff", false, 2);
+    let s = todoFactory("testing2", pro2, "8/9/2434", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
 
-addToDo(m);
-addToDo(s);
-addToDo(o);
+    let o = todoFactory("testing3", pro3, "8/9/2434", "do stuff", false, 2);
+
+    addToDo(m);
+    addToDo(s);
+    addToDo(o);
+    refreshToDos();
+}
