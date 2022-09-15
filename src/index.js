@@ -254,9 +254,9 @@ addProject(pro3);
 
 let m = todoFactory("testing1", pro1, "8/9/2434", "do stuff", false, 3);
 
-let s = todoFactory("testing2", pro1, "8/9/2434", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
+let s = todoFactory("testing2", pro2, "8/9/2434", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
 
-let o = todoFactory("testing3", pro1, "8/9/2434", "do stuff", false, 2);
+let o = todoFactory("testing3", pro3, "8/9/2434", "do stuff", false, 2);
 
 addToDo(m);
 addToDo(s);
