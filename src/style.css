@@ -1,3 +1,20 @@
+
+:root{
+    --headerColor: rgb(87, 12, 87);
+    --headerTextColor: white;
+    --sidebarColor: rgb(88, 10, 88);
+    --sidebarTextColor: white;
+    --containerBackground: rgb(206, 187, 216);
+
+    --doBoxColor: rgb(236, 253, 252);
+    --doBoxHoverColor: rgb(200, 200, 210);
+    --doBoxTextColor: black;
+
+    --highPriority: black;
+    --midPriority: rgb(255, 255, 255);
+    --lowPriority: rgb(250, 250, 255);
+}
+
 * {
     margin: 0px;
     padding: 0px;
@@ -7,7 +24,7 @@
 
 button {
 	background: none;
-	color: black;
+	color: var(--doBoxTextColor);
 	border: none;
 	padding: 0;
 	font: inherit;
@@ -15,32 +32,31 @@ button {
 	outline: inherit;
 }
 
-#searchButton, #addToDo, #projectadder{
-    color:white
+.doDate{
+    color: var(--doBoxTextColor);
+}
+
+#addToDo, #projectadder{
+    color:var(--sidebarTextColor);
+}
+
+#addToDo{
+    margin-top: auto;
+    margin-bottom: 10px;
 }
 
 #topcontainer{
     display: grid;
-    grid-template-columns: 250px minmax(330px, 4fr) minmax(275px, 1.2fr);
-    grid-template-rows: 175px 1fr 1fr;
+    grid-template-columns: 250px minmax(660px, 4fr);
+    grid-template-rows: 175px 1fr;
     min-height: 100vh;
-}
-#header{
-    display: grid;
-    grid-template-columns: 250px minmax(330px, 4fr) minmax(275px, 1.2fr);
-    grid-template-rows: 175px;
-    align-items: stretch;
-    text-align: center;
-    background-color: rgb(80, 80, 88);
-    grid-column: 1 / 5;
-    grid-row: 1 / 2;
-    box-sizing: border-box;
-    z-index: 2;
-    box-shadow: 3px 3px 3px rgb(150, 150, 160);
+    gap: 0px;
 }
 
+
 #logoContainer{
-    background-color: black;
+    background-color: var(--sidebarColor);
+    color: var(--sidebarTextColor);
     grid-column: 1/ 2;
     grid-row: 1/ 2;
     display: flex;
@@ -48,8 +64,8 @@ button {
     justify-content: center;
 }
 
-#logoContainer img{
-   width: 50%;
+#leftSidebar img{
+   width: 70%;
 }
 
 
@@ -59,66 +75,70 @@ button {
     justify-content: center;
     grid-column: 2 / 4;
     grid-row: 1 / 2;
-    color: white;
+    color: var(--headerTextColor);
 }
 
 #taskcontainer{
-    padding-top: 5px;
-    background-color: rgb(210, 210, 220);
+    padding: 10px 5px;
+    background-color: var(--containerBackground);
     grid-column: 2 / 4;
-    grid-row: 2 / 4;
+    grid-row: 1 / 4;
 }
 
 .doBox{
-    background-color: rgb(170, 170, 180);
+
+    background-color: var(--doBoxColor);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
     box-sizing: border-box;
     padding: 10px 20px 10px 20px;
-    border-left: 7px solid black;
+    border-left: 7px solid var(--highPriority);
     border-radius: 2px;
     margin: 5px 15px 10px 10px;
-    box-shadow: 1px 1px 2px rgb(150, 150, 150);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.5s;
     transition: background-color 0.2s;
 
 }
 
 .doBox:hover{
-    box-shadow: 3px 3px 3px rgb(150, 150, 150);
-    background-color: rgb(200, 200, 210);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    background-color: var(--doBoxHoverColor);
 }
 
-
-
 .priority2{
-    border-color: rgb(80, 80, 88);
+    border-color: var(--midPriority);
 }
 
 .priority1{
-    border-color: rgb(250, 250, 255);
+    border-color: var(--lowPriority);
 }
 
 .doBox .toDoName {
     margin-right: auto;
+
 }
 
 #leftSidebar{
-    color: white;
-    background-color: black;
+    color: var(--sidebarTextColor);
+    background-color: var(--sidebarColor);
+    color: var(--sidebarTextColor);
     grid-column: 1 / 2;
-    grid-row: 2 / 4;
+    grid-row: 1 / 4;
     box-sizing: border-box;
     padding: 25px;
     text-align: center;
     z-index: 2;
-    box-shadow: 3px 3px 3px rgb(150, 150, 160);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #leftSidebar button{
-    color: white;
+    color: var(--sidebarTextColor);
 }
 
 #projectHeader{
@@ -136,7 +156,7 @@ button {
 .projectBox{
     padding: 0px 6px;
     display: flex;
-    color: white;
+    color: var(--sidebarTextColor);
     justify-content: start;
     gap: 10px;
 }
@@ -150,27 +170,33 @@ button {
 }
 
 .projectBox:hover{
-    border-left: 2px solid white;
+    border-left: 2px solid var(--sidebarTextColor);
     padding-left: 4px;
 }
 
 .activeProjectBox{
-    border-left: 2px solid white;
+    border-left: 2px solid var(--sidebarTextColor);
     padding-left: 4px;
 }
 
 .projectBox::before{
     width: 15px;
     border-radius: 15px;
-    background-color: white;
+    background-color: var(--sidebarTextColor);
 }
 
 #popUpBox{
-    background-color: lightgray;
+    background-color: var(--containerBackground);
+    color: var(--doBoxTextColor)
 }
 
 #popUpHeader{
-    background-color: grey;
+    background-color: var(--headerColor);
+    color: var(--headerTextColor);
+}
+
+#popUpClose{
+    color: var(--headerTextColor);
 }
 
 #todaySelect, #weekSelect{

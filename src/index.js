@@ -12,6 +12,9 @@ const projectContainer = document.getElementById("projectList");
 const todaySelect = document.getElementById("todaySelect");
 const weekSelect = document.getElementById("weekSelect");
 
+const addToDoButton = document.getElementById("addToDo");
+const addProjectButton = document.getElementById("projectadder");
+
 function refreshToDos(){
     const today = new Date();
     let week = new Date();
@@ -65,6 +68,7 @@ function displayToDo(toDo){
     doNameDiv.classList.add("toDoName");
     doNameDiv.addEventListener('click', () => showToDoDetails(toDo));
     let doDateDiv = document.createElement('div');
+    doDateDiv.classList.add("doDate");
     doDateDiv.textContent = new Date(toDo.doDate).toDateString();
     if (toDo.completed) doNameDiv.style.textDecoration = "line-through";
     else doNameDiv.style.textDecoration = "none";
@@ -112,7 +116,7 @@ function displayToDo(toDo){
     doContainer.appendChild(doBox);
 }
 
-let addToDoButton = document.getElementById("addToDo");
+
 addToDoButton.addEventListener('click', () => {
     let newToDoBox = makePopUp("New ToDo...");
     let formBox = newToDoBox.popUpcontent;
@@ -209,7 +213,12 @@ function displayProject(project){
     
     descriptionButton.classList.add("projectDescription");
     descriptionButton.textContent = "?";
-    descriptionButton.addEventListener('click', () => console.log(project.projectDescription));
+    descriptionButton.addEventListener('click', () => {
+        let descriptionBox = makePopUp(project.projectName);
+        let descriptionContent = descriptionBox.popUpcontent;
+        descriptionContent.textContent = project.projectDescription;
+        document.body.appendChild(descriptionBox.popBox);
+    });
 
     projectBox.appendChild(projectFocus);
     projectBox.appendChild(deleteButton);
@@ -218,7 +227,7 @@ function displayProject(project){
 }
 
 
-let addProjectButton = document.getElementById("projectadder");
+
 addProjectButton.addEventListener('click', () =>{
     let newProjectBox = makePopUp("New Project...");
     let formBox = newProjectBox.popUpcontent;

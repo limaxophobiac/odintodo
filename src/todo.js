@@ -48,5 +48,4 @@ export function loadStorage(){
     let todoStore = JSON.parse(localStorage.getItem('toDoList'));
     if (projectStore != null) projectList = projectStore;
     if (todoStore != null) toDoList = todoStore;
-
 }

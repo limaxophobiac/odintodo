@@ -47,6 +47,7 @@ function makeBoxHeader(headTitle){
     headerText.marginRight = "auto";
 
     let closeButton = document.createElement('button');
+    closeButton.setAttribute("id", "popUpClose");
     closeButton.textContent = "X";
     closeButton.addEventListener('click', () => closePupUp());
  
