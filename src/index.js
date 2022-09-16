@@ -260,6 +260,10 @@ function editToDoDetails(toDo){
     editToDoButton.innerHTML = "Save ToDo";
 
     let projectSelect = document.createElement("select");
+    let oldProject = document.createElement("option");
+    oldProject.value = ""+projectList.indexOf(toDo.doProject);
+    oldProject.textContent = toDo.doProject.projectName;
+    projectSelect.appendChild(oldProject);
 
     for (let i = 0; i < projectList.length; i++){
         let pOption = document.createElement("option");
@@ -271,6 +275,9 @@ function editToDoDetails(toDo){
     dateSelect.type = "date";
     dateSelect.valueAsDate = new Date(toDo.doDate);
     let prioritySelect = document.createElement("select");
+    let oldP = document.createElement("option");
+    oldP.value = toDo.doPriority;
+    oldP.textContent = "     ";
     let lowP = document.createElement("option");
     lowP.value = "1";
     lowP.textContent = "Low";
@@ -281,6 +288,7 @@ function editToDoDetails(toDo){
     highP.value = "3";
     highP.textContent = "High";
     
+    prioritySelect.appendChild(oldP);
     prioritySelect.appendChild(lowP);
     prioritySelect.appendChild(medP);
     prioritySelect.appendChild(highP);
