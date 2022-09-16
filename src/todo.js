@@ -1,14 +1,12 @@
 let idSeed = 0;
 
-export const toDoList = [];
-export const projectList = [];
+export let toDoList = [];
+export let projectList = [];
 
 export function todoFactory(doName, doProject = null, doDate, doDescrip, completed = false, doPriority = 0){
-    function setPriority(newPriority){
-        this.doPriority = newPriority;
-    }
+    
     let id = idSeed++;
-    return {doName, doProject, doDate, doPriority, doDescrip, setPriority, id, completed};
+    return {doName, doProject, doDate, doPriority, doDescrip, id, completed};
 };
 
 export function projectFactory(projectName, projectDescription){
@@ -38,8 +36,17 @@ export function deleteProject(projectId){
 
 export function addToDo(toDo){
     toDoList.push(toDo);   
+
 }
 
 export function addProject(project){
-    projectList.push(project);   
+    projectList.push(project);
+}
+
+export function loadStorage(){
+    let projectStore = JSON.parse(localStorage.getItem('projectList'));
+    let todoStore = JSON.parse(localStorage.getItem('toDoList'));
+    if (projectStore != null) projectList = projectStore;
+    if (todoStore != null) toDoList = todoStore;
+
 }

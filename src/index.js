@@ -1,4 +1,4 @@
-import {todoFactory, projectFactory, toDoList, projectList, deleteToDo, deleteProject, addToDo, addProject} from './todo';
+import {todoFactory, projectFactory, toDoList, projectList, deleteToDo, deleteProject, addToDo, addProject, loadStorage} from './todo';
 import {makePopUp, closePupUp} from './popup';
 
 import './style.css';
@@ -19,13 +19,15 @@ function refreshToDos(){
     toDoList.sort((a, b) => a.doDate > b.doDate ? 1 : -1);
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
     function checkDate(toDo){
+        let toDoDate = new Date(toDo.doDate).getDate();
         if (!todaySelect.checked && !weekSelect.checked) displayToDo(toDo);
-        else if (todaySelect.checked && toDo.doDate.getDate() == today.getDate()) displayToDo(toDo);
-        else if (weekSelect.checked && toDo.doDate.getDate() <= week.getDate()) displayToDo(toDo);
+        else if (todaySelect.checked && toDoDate == today.getDate()) displayToDo(toDo);
+        else if (weekSelect.checked && toDoDate <= week.getDate()) displayToDo(toDo);
 
     }
     if (activeProject == null) toDoList.forEach(toDo => checkDate(toDo)); 
     else toDoList.filter(toDo => toDo.doProject.id == activeProject).forEach(toDo => checkDate(toDo));
+    localStorage.setItem('toDoList', JSON.stringify(toDoList));
 }
 
 todaySelect.addEventListener('change', () => {
@@ -43,6 +45,7 @@ function refreshProjects(){
     for (let i = 1; i < projectList.length; i++){
         displayProject(projectList[i]);
     }
+    localStorage.setItem('projectList', JSON.stringify(projectList));
 }
 
 function displayToDo(toDo){
@@ -55,7 +58,7 @@ function displayToDo(toDo){
     doNameDiv.classList.add("toDoName");
     doNameDiv.addEventListener('click', () => showToDoDetails(toDo));
     let doDateDiv = document.createElement('div');
-    doDateDiv.textContent = toDo.doDate.toDateString();
+    doDateDiv.textContent = new Date(toDo.doDate).toDateString();
     if (toDo.completed) doNameDiv.style.textDecoration = "line-through";
     else doNameDiv.style.textDecoration = "none";
     
@@ -153,6 +156,7 @@ addToDoButton.addEventListener('click', () => {
     document.body.appendChild(newToDoBox.popBox);
 
     addToDoButton.addEventListener('click', ()=> {
+        if (newTitle.value == null || newTitle.value == "") return;
         let m1 = todoFactory(newTitle.value, projectList[projectSelect.value], dateSelect.valueAsDate, newDescription.value, false, prioritySelect.value);
         addToDo(m1);
         refreshToDos();
@@ -230,6 +234,7 @@ addProjectButton.addEventListener('click', () =>{
     
 
     addProjectButton.addEventListener('click', ()=> {
+        if (newTitle.value == null || newTitle.value == "") return;
         let m1 = projectFactory(newTitle.value, newDescription.value);
         addProject(m1);
         refreshProjects();
@@ -264,7 +269,7 @@ function editToDoDetails(toDo){
     }
     let dateSelect = document.createElement("input");
     dateSelect.type = "date";
-    dateSelect.valueAsDate = toDo.doDate;
+    dateSelect.valueAsDate = new Date(toDo.doDate);
     let prioritySelect = document.createElement("select");
     let lowP = document.createElement("option");
     lowP.value = "1";
@@ -290,8 +295,8 @@ function editToDoDetails(toDo){
     document.body.appendChild(editToDoBox.popBox);
 
     editToDoButton.addEventListener('click', ()=> {
+        if (newTitle.value == null || newTitle.value == "") return;
         toDo.doName = newTitle.value;
-        console.log(projectSelect.value);
         toDo.doProject = projectList[projectSelect.value];
         toDo.doDate = dateSelect.valueAsDate;
         toDo.doDescrip = newDescription.value;
@@ -307,9 +312,10 @@ function showToDoDetails(toDo){
     infoBox.style.fontSize = "1.2rem";
     infoBox.style.lineHeight = "1.2rem";
     let projectName = toDo.doProject.projectName == 'NONE' ? "" : "Project: " + toDo.doProject.projectName;
+    let showDate =new Date(toDo.doDate);
     infoBox.innerHTML = `<p>${projectName}</p>
     <p>Priority: ${toDo.doPriority}</p>
-    <p>Due Date: ${toDo.doDate.toDateString()}</p>
+    <p>Due Date: ${showDate.toDateString()}</p>
     <br>
     <p>Description: ${toDo.doDescrip}</p>`;
 
@@ -318,7 +324,12 @@ function showToDoDetails(toDo){
 
 
 
-populate();
+
+loadStorage();
+refreshProjects();
+refreshToDos();
+
+if (projectList.length == 1 && toDoList.length == 0) populate();
 
 function populate(){
     let pro1 = projectFactory("Programming", "trying to learn to program");
