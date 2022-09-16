@@ -74,7 +74,7 @@ function displayToDo(toDo){
     editButton.textContent = "Edit";
     editButton.addEventListener('click', () => {
         //display stuff
-        console.log(`pressed edit button ${toDo.id}`);
+        editToDoDetails(toDo);
     });
     //complete todo
     let completeButton = document.createElement(`button`);
@@ -236,6 +236,70 @@ addProjectButton.addEventListener('click', () =>{
         closePupUp();
     });
 });
+
+function editToDoDetails(toDo){
+    let editToDoBox = makePopUp("Edit: " + toDo.doName);
+    let formBox = editToDoBox.popUpcontent;
+    formBox.style.fontSize = "1.3rem";
+    formBox.style.gap = "10px";
+
+    let newTitle = document.createElement("input");
+    newTitle.value = toDo.doName;
+    newTitle.type = "text";
+    let newDescription = document.createElement("textarea");
+    newDescription.value = toDo.doDescrip;
+    newDescription.style.resize = "none";
+    newDescription.style.width = "100%";
+    newDescription.style.height = "70%";
+    let editToDoButton = document.createElement("button");
+    editToDoButton.innerHTML = "Save ToDo";
+
+    let projectSelect = document.createElement("select");
+
+    for (let i = 0; i < projectList.length; i++){
+        let pOption = document.createElement("option");
+        pOption.value = ""+i;
+        pOption.textContent = projectList[i].projectName;
+        projectSelect.appendChild(pOption);
+    }
+    let dateSelect = document.createElement("input");
+    dateSelect.type = "date";
+    dateSelect.valueAsDate = toDo.doDate;
+    let prioritySelect = document.createElement("select");
+    let lowP = document.createElement("option");
+    lowP.value = "1";
+    lowP.textContent = "Low";
+    let medP = document.createElement("option");
+    medP.value = "2";
+    medP.textContent = "Medium";
+    let highP = document.createElement("option");
+    highP.value = "3";
+    highP.textContent = "High";
+    
+    prioritySelect.appendChild(lowP);
+    prioritySelect.appendChild(medP);
+    prioritySelect.appendChild(highP);
+
+    formBox.appendChild(newTitle);
+    formBox.appendChild(projectSelect);
+    formBox.appendChild(dateSelect);
+    formBox.appendChild(prioritySelect);
+    formBox.appendChild(newDescription);
+    formBox.appendChild(editToDoButton);
+
+    document.body.appendChild(editToDoBox.popBox);
+
+    editToDoButton.addEventListener('click', ()=> {
+        toDo.doName = newTitle.value;
+        console.log(projectSelect.value);
+        toDo.doProject = projectList[projectSelect.value];
+        toDo.doDate = dateSelect.valueAsDate;
+        toDo.doDescrip = newDescription.value;
+        toDo.doPriority = prioritySelect.value;
+        refreshToDos();
+        closePupUp();
+    });
+}
 
 function showToDoDetails(toDo){
     let detailsBox = makePopUp(toDo.doName);
