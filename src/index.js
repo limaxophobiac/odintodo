@@ -3,12 +3,17 @@ import {makePopUp, closePupUp} from './popup';
 
 import './style.css';
 
+let activeProject = null;
+
 const doContainer = document.getElementById("taskcontainer");
 const projectContainer = document.getElementById("projectList");
 
 function refreshToDos(){
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
-    toDoList.forEach(toDo => displayToDo(toDo));
+    if (activeProject == null) toDoList.forEach(toDo => displayToDo(toDo));
+    else toDoList.forEach(toDo => {
+        if (toDo.doProject.id == activeProject) displayToDo(toDo);
+    });
 }
 
 function refreshProjects(){
@@ -138,9 +143,25 @@ function displayProject(project){
     const projectBox = document.createElement('div');
     projectBox.id = "project" + project.projectName;
     projectBox.classList.add("projectBox");
-    let projectNameDiv = document.createElement('div');
-    projectNameDiv.textContent = project.projectName;
-    projectNameDiv.classList.add("projectName");
+    let projectFocus = document.createElement('button');
+    projectFocus.textContent = project.projectName;
+    projectFocus.classList.add("projectName");
+
+    projectFocus.addEventListener('click', ()=>{
+        if (activeProject == project.id){
+            activeProject = null;
+            projectBox.classList.remove("activeProjectBox");
+        }
+        else{
+            if (activeProject != null){
+                let old = document.getElementsByClassName("activeProjectBox")[0];
+                old.classList.remove("activeProjectBox");
+            }
+            activeProject = project.id;
+            projectBox.classList.add("activeProjectBox");
+        }
+        refreshToDos();
+    });
 
     let deleteButton = document.createElement('button');
     deleteButton.classList.add("projectDelete");
@@ -157,9 +178,9 @@ function displayProject(project){
     descriptionButton.textContent = "?";
     descriptionButton.addEventListener('click', () => console.log(project.projectDescription));
 
-    projectBox.appendChild(projectNameDiv);
-    projectBox.appendChild(descriptionButton);
+    projectBox.appendChild(projectFocus);
     projectBox.appendChild(deleteButton);
+    projectBox.appendChild(descriptionButton);
     projectContainer.appendChild(projectBox);
 }
 

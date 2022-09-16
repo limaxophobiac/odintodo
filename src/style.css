@@ -143,17 +143,54 @@ button {
     color: white;
 }
 
+#projectHeader{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 #projectList{
-    margin: 10px 15px;
+    margin: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
 }
 
 .projectBox{
+    padding: 0px 6px;
     display: flex;
     color: white;
     justify-content: start;
     gap: 10px;
 }
 
+#projectadder{
+    font-size: 1.1rem;
+}
+
 .projectName{
     margin-right: auto;
+}
+
+.projectBox:hover{
+    border-left: 2px solid white;
+    padding-left: 4px;
+}
+
+.activeProjectBox{
+    border-left: 2px solid white;
+    padding-left: 4px;
+}
+
+.projectBox::before{
+    width: 15px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+#popUpBox{
+    background-color: lightgray;
+}
+
+#popUpHeader{
+    background-color: grey;
 }

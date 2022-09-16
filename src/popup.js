@@ -11,7 +11,7 @@ export function makePopUp(title, blockIndex = 100){
     popBox.style.width = "50%";
     popBox.style.height = "60%";
     popBox.style.zIndex = `${blockIndex+1}`;
-    popBox.style.backgroundColor = "lightgray";
+    
     popBox.style.top = "50%";
     popBox.style.left = "50%";
     popBox.style.marginTop = "min(-200px, -30vh)";
@@ -32,7 +32,7 @@ export function makePopUp(title, blockIndex = 100){
 function makeBoxHeader(headTitle){
     let boxHeader = document.createElement('div');
 
-    boxHeader.style.backgroundColor = "gray";
+    boxHeader.setAttribute("id", "popUpHeader");
     boxHeader.style.height = "10%";
     boxHeader.style.display = "flex";
     boxHeader.style.justifyContent = "space-between";
