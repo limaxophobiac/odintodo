@@ -16,7 +16,14 @@ function refreshToDos(){
     const today = new Date();
     let week = new Date();
     week.setDate(today.getDate() + 7);
-    toDoList.sort((a, b) => a.doDate > b.doDate ? 1 : -1);
+    toDoList.sort((a, b) => {
+        let a2 = new Date(a.doDate);
+        let b2 = new Date(b.doDate);
+        if (a2 > b2) return 1;
+        if (b2 > a2) return -1;
+        if (a.doName > b.doName) return 1;
+        return -1;
+    });
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
     function checkDate(toDo){
         let toDoDate = new Date(toDo.doDate).getDate();
@@ -93,6 +100,7 @@ function displayToDo(toDo){
             doNameDiv.style.textDecoration = "none";
             completeButton.textContent = "Complete";
         }
+        refreshToDos();
     });
 
     doBox.appendChild(doNameDiv);
@@ -330,9 +338,6 @@ function showToDoDetails(toDo){
     document.body.appendChild(detailsBox.popBox);
 }
 
-
-
-
 loadStorage();
 refreshProjects();
 refreshToDos();
@@ -352,9 +357,7 @@ function populate(){
     k.setDate(p.getDate() +4)
 
     let m = todoFactory("testing1", pro1, p, "do stuff", false, 3);
-    
     let s = todoFactory("testing2", pro2, k, "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
-
     let o = todoFactory("testing3", pro3, p, "do stuff", false, 2);
 
     addToDo(m);
