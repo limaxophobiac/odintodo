@@ -195,7 +195,16 @@ button {
     background-color: grey;
 }
 
-#timeselector{
-    display: flex;
-    flex-direction: column;
+#todaySelect, #weekSelect{
+    opacity: 0%;
+    cursor: pointer;
 }
+
+label{
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label::before{
+    content: '-';
+}
+

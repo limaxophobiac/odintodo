@@ -13,13 +13,30 @@ const todaySelect = document.getElementById("todaySelect");
 const weekSelect = document.getElementById("weekSelect");
 
 function refreshToDos(){
+    const today = new Date();
+    let week = new Date();
+    week.setDate(today.getDate() + 7);
     toDoList.sort((a, b) => a.doDate > b.doDate ? 1 : -1);
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
-    if (activeProject == null) toDoList.forEach(toDo => displayToDo(toDo));
-    else toDoList.forEach(toDo => {
-        if (toDo.doProject.id == activeProject) displayToDo(toDo);
-    });
+    function checkDate(toDo){
+        if (!todaySelect.checked && !weekSelect.checked) displayToDo(toDo);
+        else if (todaySelect.checked && toDo.doDate.getDate() == today.getDate()) displayToDo(toDo);
+        else if (weekSelect.checked && toDo.doDate.getDate() <= week.getDate()) displayToDo(toDo);
+
+    }
+    if (activeProject == null) toDoList.forEach(toDo => checkDate(toDo)); 
+    else toDoList.filter(toDo => toDo.doProject.id == activeProject).forEach(toDo => checkDate(toDo));
 }
+
+todaySelect.addEventListener('change', () => {
+    if (todaySelect.checked) weekSelect.checked = false;
+    refreshToDos();
+});
+weekSelect.addEventListener('change', () => {
+    if (weekSelect.checked) todaySelect.checked = false;
+    refreshToDos();
+});
+
 
 function refreshProjects(){
     document.querySelectorAll(".projectBox").forEach(elem => elem.remove());
@@ -33,9 +50,10 @@ function displayToDo(toDo){
     doBox.id = "toDo" + toDo.doName;
     doBox.classList.add("doBox");
     doBox.classList.add("priority" + toDo.doPriority);
-    let doNameDiv = document.createElement('div');
+    let doNameDiv = document.createElement('button');
     doNameDiv.textContent = toDo.doName;
     doNameDiv.classList.add("toDoName");
+    doNameDiv.addEventListener('click', () => showToDoDetails(toDo));
     let doDateDiv = document.createElement('div');
     doDateDiv.textContent = toDo.doDate.toDateString();
     if (toDo.completed) doNameDiv.style.textDecoration = "line-through";
@@ -49,11 +67,7 @@ function displayToDo(toDo){
         deleteToDo(toDo.id);
         refreshToDos();
     });
-    //details for todo
-    let detailsButton = document.createElement(`button`);
-    detailsButton.classList.add("toDoDetail");
-    detailsButton.textContent = "Details";
-    detailsButton.addEventListener('click', () => showToDoDetails(toDo));
+
     //edit todo
     let editButton = document.createElement(`button`);
     editButton.classList.add("toDoEdit");
@@ -81,7 +95,7 @@ function displayToDo(toDo){
     doBox.appendChild(doNameDiv);
     doBox.appendChild(doDateDiv);
     doBox.appendChild(completeButton);
-    doBox.appendChild(detailsButton);
+
     doBox.appendChild(editButton);
     doBox.appendChild(deleteButton);
     doContainer.appendChild(doBox);
@@ -228,7 +242,8 @@ function showToDoDetails(toDo){
     let infoBox = detailsBox.popUpcontent;
     infoBox.style.fontSize = "1.2rem";
     infoBox.style.lineHeight = "1.2rem";
-    infoBox.innerHTML = `<p>Project: ${toDo.doProject.projectName}</p>
+    let projectName = toDo.doProject.projectName == 'NONE' ? "" : "Project: " + toDo.doProject.projectName;
+    infoBox.innerHTML = `<p>${projectName}</p>
     <p>Priority: ${toDo.doPriority}</p>
     <p>Due Date: ${toDo.doDate.toDateString()}</p>
     <br>
@@ -264,3 +279,4 @@ function populate(){
     addToDo(o);
     refreshToDos();
 }
+
