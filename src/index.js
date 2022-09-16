@@ -257,8 +257,8 @@ function editToDoDetails(toDo){
     formBox.style.gap = "10px";
 
     let newTitle = document.createElement("input");
-    newTitle.value = toDo.doName;
     newTitle.type = "text";
+    newTitle.value = toDo.doName;
     let newDescription = document.createElement("textarea");
     newDescription.value = toDo.doDescrip;
     newDescription.style.resize = "none";
@@ -268,10 +268,6 @@ function editToDoDetails(toDo){
     editToDoButton.innerHTML = "Save ToDo";
 
     let projectSelect = document.createElement("select");
-    let oldProject = document.createElement("option");
-    oldProject.value = ""+projectList.indexOf(toDo.doProject);
-    oldProject.textContent = toDo.doProject.projectName;
-    projectSelect.appendChild(oldProject);
 
     for (let i = 0; i < projectList.length; i++){
         let pOption = document.createElement("option");
@@ -337,6 +333,8 @@ function showToDoDetails(toDo){
 
     document.body.appendChild(detailsBox.popBox);
 }
+
+
 
 loadStorage();
 refreshProjects();
