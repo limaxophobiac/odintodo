@@ -194,3 +194,8 @@ button {
 #popUpHeader{
     background-color: grey;
 }
+
+#timeselector{
+    display: flex;
+    flex-direction: column;
+}

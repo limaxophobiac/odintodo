@@ -4,11 +4,16 @@ import {makePopUp, closePupUp} from './popup';
 import './style.css';
 
 let activeProject = null;
+let defaultProject = projectFactory("NONE", "default project");
+addProject(defaultProject);
 
 const doContainer = document.getElementById("taskcontainer");
 const projectContainer = document.getElementById("projectList");
+const todaySelect = document.getElementById("todaySelect");
+const weekSelect = document.getElementById("weekSelect");
 
 function refreshToDos(){
+    toDoList.sort((a, b) => a.doDate > b.doDate ? 1 : -1);
     document.querySelectorAll(".doBox").forEach(elem => elem.remove());
     if (activeProject == null) toDoList.forEach(toDo => displayToDo(toDo));
     else toDoList.forEach(toDo => {
@@ -18,7 +23,9 @@ function refreshToDos(){
 
 function refreshProjects(){
     document.querySelectorAll(".projectBox").forEach(elem => elem.remove());
-    projectList.forEach(project => displayProject(project));
+    for (let i = 1; i < projectList.length; i++){
+        displayProject(projectList[i]);
+    }
 }
 
 function displayToDo(toDo){
@@ -30,7 +37,7 @@ function displayToDo(toDo){
     doNameDiv.textContent = toDo.doName;
     doNameDiv.classList.add("toDoName");
     let doDateDiv = document.createElement('div');
-    doDateDiv.textContent = toDo.doDate;
+    doDateDiv.textContent = toDo.doDate.toDateString();
     if (toDo.completed) doNameDiv.style.textDecoration = "line-through";
     else doNameDiv.style.textDecoration = "none";
     
@@ -132,7 +139,7 @@ addToDoButton.addEventListener('click', () => {
     document.body.appendChild(newToDoBox.popBox);
 
     addToDoButton.addEventListener('click', ()=> {
-        let m1 = todoFactory(newTitle.value, projectList[projectSelect.value], dateSelect.value, newDescription.value, false, prioritySelect.value);
+        let m1 = todoFactory(newTitle.value, projectList[projectSelect.value], dateSelect.valueAsDate, newDescription.value, false, prioritySelect.value);
         addToDo(m1);
         refreshToDos();
         closePupUp();
@@ -223,7 +230,7 @@ function showToDoDetails(toDo){
     infoBox.style.lineHeight = "1.2rem";
     infoBox.innerHTML = `<p>Project: ${toDo.doProject.projectName}</p>
     <p>Priority: ${toDo.doPriority}</p>
-    <p>Due Date: ${toDo.doDate}</p>
+    <p>Due Date: ${toDo.doDate.toDateString()}</p>
     <br>
     <p>Description: ${toDo.doDescrip}</p>`;
 
@@ -242,12 +249,15 @@ function populate(){
     addProject(pro2);
     addProject(pro3);
     refreshProjects();
+    let p = new Date();
+    let k = new Date();
+    k.setDate(p.getDate() +4)
 
-    let m = todoFactory("testing1", pro1, "8/9/2434", "do stuff", false, 3);
+    let m = todoFactory("testing1", pro1, p, "do stuff", false, 3);
+    
+    let s = todoFactory("testing2", pro2, k, "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
 
-    let s = todoFactory("testing2", pro2, "8/9/2434", "do stuffasfddsdsfsd  sdfgsdfg sdgf gs dgf fgdsfgdsgs  g gg dfs gdfsg fdsg fsd gfd g gfdfg sdg dfs fgds gfdsg fsd gfdsg fdsg fds gfdsg sg fdsg fdsg f gdfs gfds gdfs gdsf gfdsgdfsfadsfa", false, 1);
-
-    let o = todoFactory("testing3", pro3, "8/9/2434", "do stuff", false, 2);
+    let o = todoFactory("testing3", pro3, p, "do stuff", false, 2);
 
     addToDo(m);
     addToDo(s);
