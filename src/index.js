@@ -6,7 +6,6 @@ import './style.css';
 let activeProject = null;
 let defaultProject = projectFactory("NONE", "default project");
 addProject(defaultProject);
-refreshProjects();
 
 const doContainer = document.getElementById("taskcontainer");
 const projectContainer = document.getElementById("projectList");
