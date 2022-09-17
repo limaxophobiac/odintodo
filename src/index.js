@@ -1,4 +1,4 @@
-import {todoFactory, projectFactory, toDoList, projectList, deleteToDo, deleteProject, addToDo, addProject, loadStorage} from './todo';
+import {todoFactory, projectFactory, toDoList, projectList, deleteToDo, deleteProject, addToDo, addProject, loadStorage, idSeed} from './todo';
 import {makePopUp, closePupUp} from './popup';
 
 import './style.css';
@@ -38,6 +38,7 @@ function refreshToDos(){
     if (activeProject == null) toDoList.forEach(toDo => checkDate(toDo)); 
     else toDoList.filter(toDo => toDo.doProject.id == activeProject).forEach(toDo => checkDate(toDo));
     localStorage.setItem('toDoList', JSON.stringify(toDoList));
+    localStorage.setItem('idSeed', JSON.stringify(idSeed));
 }
 
 todaySelect.addEventListener('change', () => {
@@ -56,6 +57,7 @@ function refreshProjects(){
         displayProject(projectList[i]);
     }
     localStorage.setItem('projectList', JSON.stringify(projectList));
+    localStorage.setItem('idSeed', JSON.stringify(idSeed));
 }
 
 function displayToDo(toDo){

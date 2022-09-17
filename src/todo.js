@@ -1,4 +1,4 @@
-let idSeed = 0;
+export let idSeed = 0;
 
 export let toDoList = [];
 export let projectList = [];
@@ -46,6 +46,8 @@ export function addProject(project){
 export function loadStorage(){
     let projectStore = JSON.parse(localStorage.getItem('projectList'));
     let todoStore = JSON.parse(localStorage.getItem('toDoList'));
+    let idStorage = JSON.parse(localStorage.getItem('idSeed'));
     if (projectStore != null) projectList = projectStore;
     if (todoStore != null) toDoList = todoStore;
+    if (idStorage != null) idSeed = idStorage;
 }
