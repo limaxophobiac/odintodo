@@ -94,6 +94,7 @@ function displayToDo(toDo){
     let completeButton = document.createElement(`button`);
     completeButton.classList.add("toDoComplete");
     completeButton.textContent = toDo.completed ? "Undo" : "Complete";
+    completeButton.style.marginRight =  toDo.completed ? "35px" : "5px";
     completeButton.addEventListener('click', () => {
         toDo.completed = !toDo.completed;
         if (toDo.completed){
@@ -120,17 +121,26 @@ function displayToDo(toDo){
 addToDoButton.addEventListener('click', () => {
     let newToDoBox = makePopUp("New ToDo...");
     let formBox = newToDoBox.popUpcontent;
-    formBox.style.fontSize = "1.3rem";
-    formBox.style.gap = "10px";
+    formBox.style.display = "grid";
+    formBox.style.gridTemplateColumns = "1fr 1fr 1fr 1fr"
+    formBox.style.gridTemplateRows = "15px 20px 15px 1fr 40px";
+    formBox.style.fontSize = "1.1rem";
+    formBox.style.gap = "5px";
 
     let newTitle = document.createElement("input");
     newTitle.type = "text";
     let newDescription = document.createElement("textarea");
     newDescription.style.resize = "none";
     newDescription.style.width = "100%";
-    newDescription.style.height = "70%";
+    newDescription.style.height = "100%";
+    newDescription.style.gridRow = "4/5";
+    newDescription.style.gridColumn = "1/5"
     let addToDoButton = document.createElement("button");
+    addToDoButton.style.gridRow = "5/6";
+    addToDoButton.style.gridColumn = "1/2";
+    addToDoButton.style.justifySelf = "start";
     addToDoButton.innerHTML = "Add ToDo";
+    addToDoButton.style.fontSize = "1.3rem";
 
     let projectSelect = document.createElement("select");
 
@@ -158,10 +168,26 @@ addToDoButton.addEventListener('click', () => {
     prioritySelect.appendChild(medP);
     prioritySelect.appendChild(highP);
 
+    let titleLabel = document.createElement("p");
+    titleLabel.textContent = "Name";
+    let projectLabel = document.createElement("p");
+    projectLabel.textContent = "Project";
+    let dateLabel = document.createElement("p");
+    dateLabel.textContent = "Date";
+    let prioLabel = document.createElement("p");
+    prioLabel.textContent = "Priority";
+    let descLabel = document.createElement("p");
+    descLabel.textContent = "Description";
+
+    formBox.appendChild(titleLabel);
+    formBox.appendChild(projectLabel);
+    formBox.appendChild(dateLabel);
+    formBox.appendChild(prioLabel);
     formBox.appendChild(newTitle);
     formBox.appendChild(projectSelect);
     formBox.appendChild(dateSelect);
     formBox.appendChild(prioritySelect);
+    formBox.appendChild(descLabel);
     formBox.appendChild(newDescription);
     formBox.appendChild(addToDoButton);
 
@@ -234,17 +260,35 @@ addProjectButton.addEventListener('click', () =>{
 
     formBox.style.fontSize = "1.3rem";
     formBox.style.gap = "10px";
-
+    formBox.style.display = "flex";
+    formBox.style.flexDirection = "column";
+ 
+    let titleLabel = document.createElement("p");
+    titleLabel.style.fontSize = "1.1rem";
+    titleLabel.textContent = "Project Title: ";
     let newTitle = document.createElement("input");
     newTitle.type = "text";
+    let titleContainer = document.createElement("div");
+    titleContainer.style.display = "flex";
+    titleContainer.style.gap = "5px";
+    let descLabel = document.createElement("p");
+    descLabel.style.fontSize = "1.1rem";
+    descLabel.textContent = "Project Description:";
     let newDescription = document.createElement("textarea");
     newDescription.style.resize = "none";
     newDescription.style.width = "100%";
-    newDescription.style.height = "70%";
+    newDescription.style.height = "75%";
+    newDescription.style.marginTop = "-5px"
     let addProjectButton = document.createElement("button");
+
+    addProjectButton.style.alignSelf = "start";
     addProjectButton.innerHTML = "Add Project";
 
-    formBox.appendChild(newTitle);
+
+    titleContainer.appendChild(titleLabel);
+    titleContainer.appendChild(newTitle);
+    formBox.appendChild(titleContainer);
+    formBox.appendChild(descLabel);
     formBox.appendChild(newDescription);
     formBox.appendChild(addProjectButton);
     document.body.appendChild(newProjectBox.popBox);
@@ -262,8 +306,11 @@ addProjectButton.addEventListener('click', () =>{
 function editToDoDetails(toDo){
     let editToDoBox = makePopUp("Edit: " + toDo.doName);
     let formBox = editToDoBox.popUpcontent;
-    formBox.style.fontSize = "1.3rem";
-    formBox.style.gap = "10px";
+    formBox.style.display = "grid";
+    formBox.style.gridTemplateColumns = "1fr 1fr 1fr 1fr"
+    formBox.style.gridTemplateRows = "15px 20px 15px 1fr 40px";
+    formBox.style.fontSize = "1.1rem";
+    formBox.style.gap = "5px";
 
     let newTitle = document.createElement("input");
     newTitle.type = "text";
@@ -272,9 +319,15 @@ function editToDoDetails(toDo){
     newDescription.value = toDo.doDescrip;
     newDescription.style.resize = "none";
     newDescription.style.width = "100%";
-    newDescription.style.height = "70%";
+    newDescription.style.height = "100%";
+    newDescription.style.gridRow = "4/5";
+    newDescription.style.gridColumn = "1/5"
     let editToDoButton = document.createElement("button");
-    editToDoButton.innerHTML = "Save ToDo";
+    editToDoButton.style.gridRow = "5/6";
+    editToDoButton.style.gridColumn = "1/2";
+    editToDoButton.style.justifySelf = "start";
+    editToDoButton.innerHTML = "Save Changes";
+    editToDoButton.style.fontSize = "1.3rem";
 
     let projectSelect = document.createElement("select");
 
@@ -306,10 +359,26 @@ function editToDoDetails(toDo){
     prioritySelect.appendChild(medP);
     prioritySelect.appendChild(highP);
 
+    let titleLabel = document.createElement("p");
+    titleLabel.textContent = "Name";
+    let projectLabel = document.createElement("p");
+    projectLabel.textContent = "Project";
+    let dateLabel = document.createElement("p");
+    dateLabel.textContent = "Date";
+    let prioLabel = document.createElement("p");
+    prioLabel.textContent = "Priority";
+    let descLabel = document.createElement("p");
+    descLabel.textContent = "Description";
+
+    formBox.appendChild(titleLabel);
+    formBox.appendChild(projectLabel);
+    formBox.appendChild(dateLabel);
+    formBox.appendChild(prioLabel);
     formBox.appendChild(newTitle);
     formBox.appendChild(projectSelect);
     formBox.appendChild(dateSelect);
     formBox.appendChild(prioritySelect);
+    formBox.appendChild(descLabel);
     formBox.appendChild(newDescription);
     formBox.appendChild(editToDoButton);
 

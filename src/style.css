@@ -50,7 +50,7 @@ button {
 
 #topcontainer{
     display: grid;
-    grid-template-columns: 250px minmax(660px, 4fr);
+    grid-template-columns: 250px minmax(500px, 1fr);
     grid-template-rows: 1fr;
     min-height: 100vh;
     gap: 0px;
@@ -60,7 +60,6 @@ button {
 #logoContainer{
     background-color: var(--sidebarColor);
     color: var(--sidebarTextColor);
-    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -201,11 +200,14 @@ button {
 }
 
 #timeselector{
+    margin: 5px 0px 15px 0px;
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 10px;
 }
+
+
 
 label{
     cursor: pointer;
