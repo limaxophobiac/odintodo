@@ -4,15 +4,16 @@
     --headerTextColor: white;
     --sidebarColor: rgb(88, 10, 88);
     --sidebarTextColor: white;
-    --containerBackground: rgb(206, 187, 216);
+    --containerBackground: rgb(141, 114, 156);
+    --popupBackground: rgb(206, 187, 216);
 
-    --doBoxColor: rgb(236, 253, 252);
-    --doBoxHoverColor: rgb(200, 200, 210);
+    --doBoxColor: rgb(220, 200, 220);
+    --doBoxHoverColor: rgb(255, 235, 255);
     --doBoxTextColor: black;
 
-    --highPriority: black;
-    --midPriority: rgb(255, 255, 255);
-    --lowPriority: rgb(250, 250, 255);
+    --highPriority: rgb(255, 0, 50);
+    --midPriority: rgb(255, 205, 0);
+    --lowPriority: rgb(0, 235, 50);
 }
 
 * {
@@ -41,14 +42,16 @@ button {
 }
 
 #addToDo{
+    font-size: 1.6rem;
     margin-top: auto;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 #topcontainer{
     display: grid;
     grid-template-columns: 250px minmax(660px, 4fr);
-    grid-template-rows: 175px 1fr;
+    grid-template-rows: 1fr;
     min-height: 100vh;
     gap: 0px;
 }
@@ -57,26 +60,16 @@ button {
 #logoContainer{
     background-color: var(--sidebarColor);
     color: var(--sidebarTextColor);
-    grid-column: 1/ 2;
-    grid-row: 1/ 2;
+    
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 #leftSidebar img{
-   width: 70%;
+   width: 100%;
 }
 
-
-#hButton{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column: 2 / 4;
-    grid-row: 1 / 2;
-    color: var(--headerTextColor);
-}
 
 #taskcontainer{
     padding: 10px 5px;
@@ -135,6 +128,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    justify-content: space-between;
 }
 
 #leftSidebar button{
@@ -143,7 +137,7 @@ button {
 
 #projectHeader{
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 #projectList{
@@ -162,7 +156,9 @@ button {
 }
 
 #projectadder{
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 .projectName{
@@ -186,7 +182,7 @@ button {
 }
 
 #popUpBox{
-    background-color: var(--containerBackground);
+    background-color: var( --popupBackground);
     color: var(--doBoxTextColor)
 }
 
@@ -204,11 +200,33 @@ button {
     cursor: pointer;
 }
 
+#timeselector{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
 label{
     cursor: pointer;
 }
 
-input[type="checkbox"]:checked + label::before{
-    content: '-';
+#leftSidebar label{
+    font-weight: bold;
+    margin-left: 22px;
+    font-size: 1.2rem;
+
 }
+
+input[type="checkbox"] + label{
+    padding-left: 8px;
+}
+
+input[type="checkbox"]:checked + label{
+    border-left: 3px solid var(--sidebarTextColor);
+    padding-left: 5px;
+}
+
+
+
 
